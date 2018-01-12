@@ -2,7 +2,7 @@ package com.game.mechanics;
 
 public interface DrawHand {
       
-      void setHand();
+      void setHand(String arr);
       
-      int getHand();
+      String getHand();
 }

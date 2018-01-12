@@ -1,21 +1,29 @@
 package com.game.mechanics;
 
-public class Player implements DrawHand{
-   int Money, ID, sum;
-   String name;
+public class Player extends Cards {
+   protected int Money, ID, sum, PlayerValue = 0; 
+   protected String name, cardHand = "Player's Hand:";
    
    Player(int a, int b, String c){
-      Money = a;
-      ID = b;
-      name = c;
+      this.Money = a;
+      this.ID = b;
+      this.name = c;
    }
    
-   public void setHand() {
-     
+   public int setHand(String card, int index) {
+     this.cardHand = cardHand + " " + card;
+     this.PlayerValue += getPoints(card);
+     index++;
+     return index;
    }
    
-   public int getHand() {
-      return this.sum;
+   public void getHand() {
+      System.out.println(cardHand + "   Card Points: " + PlayerValue);
+   }
+   
+   public void clearHand() {
+      this.cardHand = "Player's Hand:";
+      this.PlayerValue = 0;
    }
 
 }

@@ -1,40 +1,78 @@
 package com.game.mechanics;
 
-import com.game.mechanics.*;
-import java.util.Scanner;
-
-public class BlackJack {
+public class BlackJack extends playBlackJack{
    public static void main(String[] args) {
-     int Round = 1;
-     int Bet;
-     int PlayerValue, DealerValue;
+   int DeckTrack = 0;
+   boolean Shuffle = false;
     
-int [] cardValue = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
 String [] Ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
      
-     Deck gameDeck = new Deck(Ranks);
+     BlackJack Game = new BlackJack();
+     Deck gameDeck = new Deck();
      gameDeck.createDeck(Ranks);
      
      for(int i=0; i<Ranks.length*4; i++) {
-        System.out.println(gameDeck.DeckList[i]);
+        System.out.print(gameDeck.DeckList[i] + " ");
      }
      
-     System.out.println("---WELCOME TO BLACKJACK THE GAME---");
+     System.out.println("\n" + "---WELCOME TO BLACKJACK THE GAME---");
      
-     Scanner sc = new Scanner(System.in);
-     Player P1 = new Player(1000, 498102, "Dylan");
         do {
-           System.out.println("Round " + Round++ + ": " + "You have $"+P1.Money);
-           System.out.println("How much would you like to bet?");
-           System.out.print(">");
-           Bet = sc.nextInt();
+           Game.RoundStart();
+           Game.BetHandler(Game.Bet, Game.P1.Money);
            
-           P1.setHand();
-           PlayerValue = P1.getHand();
-           System.out.println(PlayerValue);
+           for(int i=0; i<2; i++) {
+              DeckTrack = Game.P1.setHand(gameDeck.getDeck(DeckTrack), DeckTrack);
+              DeckTrack = Game.D.setHand(gameDeck.getDeck(DeckTrack), DeckTrack);
+           }
            
-        } while(P1.Money > 0);
-        sc.close();
+           Game.P1.getHand();
+           
+           while(Game.D.DealerValue < 16) {
+              DeckTrack = Game.D.drawCard(DeckTrack,Game.D.DealerValue,
+                 Game.D.cardHand,Game.D.cardReveal,
+                 gameDeck.getDeck(DeckTrack));
+           }
+           
+           Game.D.revealHand();
+           Game.D.getHand();
+           
+           Game.gameResult(Game.P1.PlayerValue, Game.D.DealerValue);
+           Game.MoneyHandler(Game.Bet, Game.P1.Money, Game.Match);
+           
+           Game.P1.clearHand();
+           Game.D.clearHand();
+           
+           DeckTrack = gameDeck.ShuffleDeck(DeckTrack, Shuffle, Ranks);
+           
+        } while(Game.P1.Money > 0);
+        
+        System.out.println("You ran out of Money...");
+        Game.sc.close();
      
+   }
+   
+   void gameResult(int PlayerValue, int DealerValue) {
+      if(DealerValue==21) {
+         Match = MatchResult.LOSE;
+      }
+      else if(PlayerValue>21) {
+         Match = MatchResult.LOSE;
+      }
+      else if(DealerValue>21) {
+         Match = MatchResult.WIN;
+      }
+      else if(PlayerValue==21 && DealerValue!=21) {
+         Match = MatchResult.WIN;
+      }
+      else if(DealerValue == PlayerValue && PlayerValue<22) {
+         Match = MatchResult.DRAW;
+      }
+      else if(DealerValue > PlayerValue && DealerValue<22) {
+         Match = MatchResult.LOSE;
+      }
+      else if(DealerValue < PlayerValue && PlayerValue<22) {
+         Match = MatchResult.WIN;
+      }
    }
 }
