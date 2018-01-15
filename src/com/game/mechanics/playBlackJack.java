@@ -22,7 +22,7 @@ public class playBlackJack {
          System.out.println("Oops, you seem to be a little short!");
          System.out.println("Please try again.");
          System.out.print(">");
-         Bet = sc.nextInt();
+         this.Bet = sc.nextInt();
       }
    }
    
@@ -36,6 +36,37 @@ public class playBlackJack {
       } else {
          P1.Money -= Bet;
          System.out.println("You lose $" + Bet + "!");
+      }
+   }
+   
+   boolean checkAces() {
+      this.P1.Aces = P1.NumberAces(P1.cardHand);
+      this.D.Aces = D.NumberAces(D.cardHand);
+      if(D.Aces==2) {
+         D.DealerValue = 21;
+         System.out.println("Dealer has BlackJack!");return true;
+      }
+      else if(D.Aces==1 && D.DealerValue==21) {
+         System.out.println("Dealer has BlackJack!");return true;
+      }
+      else if(P1.Aces==2) {
+         P1.PlayerValue = 21;
+         System.out.println("Player has BlackJack!");return true;
+      }
+      else if(P1.Aces==1 && P1.PlayerValue==21) {
+         System.out.println("Player has BlackJack!");return true;
+      }
+      return false;
+   }
+   
+   void PlayerMove(int PlayerValue) {
+      if(PlayerValue > 16 && PlayerValue < 21) {
+         System.out.println("Would you like to draw from deck?");
+         System.out.println("Type 'Yes' to draw, 'No' to pass.");
+         System.out.print(">");
+         this.P1.toDraw = sc.next();
+      } else {
+         this.P1.toDraw = "Yes";
       }
    }
    

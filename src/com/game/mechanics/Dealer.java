@@ -30,6 +30,9 @@ public class Dealer extends Cards {
        this.cardHand = cardHand + " " + card;
        this.cardReveal = cardReveal + " X";
        this.DealerValue += getPoints(card);
+       if(card == "Ace") {
+          this.Aces++;
+       }
        DeckTrack++;
        return DeckTrack;
     }

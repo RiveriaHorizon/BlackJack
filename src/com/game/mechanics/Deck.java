@@ -32,7 +32,7 @@ public class Deck {
    int ShuffleDeck(int DeckTrack, boolean Shuffle, String [] Ranks) {
       if(DeckTrack > 46) {
          createDeck(Ranks);
-         System.out.println("Deck has been reshuffled!");
+         System.out.println("---Deck has been reshuffled!---");
          return 0;
       } else {
       return DeckTrack;

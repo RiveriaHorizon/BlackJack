@@ -1,6 +1,7 @@
 package com.game.mechanics;
 
 public class Cards extends Deck{
+   protected int Aces = 0;
    
    int getPoints(String card) {
       switch(card) {
@@ -20,4 +21,24 @@ public class Cards extends Deck{
       }
    }
   
+   int NumberAces(String cards) {
+      int count = 0, idx = 0;
+      
+      while((idx = cards.indexOf("Ace", idx)) != -1){
+         idx++;
+         count++;
+      }
+      return count;
+   }
+   
+   int AceHandler(int Aces, int HandValue) {
+      System.out.println("Number of Aces: " + Aces);
+      if(HandValue > 21 && Aces != 0) {
+         HandValue -= 10;
+         this.Aces--;
+      }
+      System.out.println("Number of Aces (After Process): " + this.Aces);
+      return HandValue;
+   }
+   
 }

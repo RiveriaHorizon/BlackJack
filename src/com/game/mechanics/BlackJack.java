@@ -3,7 +3,7 @@ package com.game.mechanics;
 public class BlackJack extends playBlackJack{
    public static void main(String[] args) {
    int DeckTrack = 0;
-   boolean Shuffle = false;
+   boolean Shuffle = false, BlackJack = false;
     
 String [] Ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
      
@@ -19,6 +19,14 @@ String [] Ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen"
      
         do {
            Game.RoundStart();
+           
+           /*try {
+              Game.Bet = Game.sc.nextInt();
+              } catch(Exception e) {
+                 System.out.println("Please enter a valid numeric value.");
+                 Game.RoundStart();
+              }*/
+           
            Game.BetHandler(Game.Bet, Game.P1.Money);
            
            for(int i=0; i<2; i++) {
@@ -27,14 +35,25 @@ String [] Ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen"
            }
            
            Game.P1.getHand();
+           BlackJack = Game.checkAces();
            
-           while(Game.D.DealerValue < 16) {
-              DeckTrack = Game.D.drawCard(DeckTrack,Game.D.DealerValue,
-                 Game.D.cardHand,Game.D.cardReveal,
-                 gameDeck.getDeck(DeckTrack));
+           if(BlackJack == false) {
+              while(Game.D.DealerValue < 16) {
+                 DeckTrack = Game.D.drawCard(DeckTrack,Game.D.DealerValue,
+                    Game.D.cardHand,Game.D.cardReveal,
+                    gameDeck.getDeck(DeckTrack));
+                 Game.D.DealerValue = Game.D.AceHandler(Game.D.Aces, Game.D.DealerValue);
+              }
+              Game.D.revealHand();
+              
+              while(Game.P1.PlayerValue < 21) {
+                 Game.PlayerMove(Game.P1.PlayerValue);
+                 DeckTrack = Game.P1.drawCard(DeckTrack,Game.P1.PlayerValue,
+                    Game.P1.cardHand,Game.P1.toDraw,
+                    gameDeck.getDeck(DeckTrack));
+              }
            }
            
-           Game.D.revealHand();
            Game.D.getHand();
            
            Game.gameResult(Game.P1.PlayerValue, Game.D.DealerValue);
