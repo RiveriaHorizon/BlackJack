@@ -2,6 +2,8 @@ package com.game.mechanics;
 
 public class Cards extends Deck{
    protected int Aces = 0;
+   protected String toDraw = "Yes";
+   protected boolean isDraw = true;
    
    int getPoints(String card) {
       switch(card) {
@@ -32,13 +34,21 @@ public class Cards extends Deck{
    }
    
    int AceHandler(int Aces, int HandValue) {
-      System.out.println("Number of Aces: " + Aces);
       if(HandValue > 21 && Aces != 0) {
          HandValue -= 10;
          this.Aces--;
       }
-      System.out.println("Number of Aces (After Process): " + this.Aces);
       return HandValue;
+   }
+   
+   boolean Draw(String toDraw) {
+      boolean isDraw = false;
+      if(toDraw.equals("Yes")) {
+         isDraw = true;
+      } else {
+         isDraw = false;
+      }
+      return isDraw;
    }
    
 }

@@ -15,7 +15,7 @@ String [] Ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen"
         System.out.print(gameDeck.DeckList[i] + " ");
      }
      
-     System.out.println("\n" + "---WELCOME TO BLACKJACK THE GAME---");
+     System.out.println("\n" + "------============WELCOME TO BLACKJACK THE GAME============------");
      
         do {
            Game.RoundStart();
@@ -39,18 +39,14 @@ String [] Ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen"
            
            if(BlackJack == false) {
               while(Game.D.DealerValue < 16) {
-                 DeckTrack = Game.D.drawCard(DeckTrack,Game.D.DealerValue,
-                    Game.D.cardHand,Game.D.cardReveal,
-                    gameDeck.getDeck(DeckTrack));
+                 DeckTrack = Game.D.drawCard(DeckTrack, gameDeck.getDeck(DeckTrack));
                  Game.D.DealerValue = Game.D.AceHandler(Game.D.Aces, Game.D.DealerValue);
               }
               Game.D.revealHand();
               
-              while(Game.P1.PlayerValue < 21) {
+              while(Game.P1.PlayerValue < 21 && Game.P1.isDraw == true) {
                  Game.PlayerMove(Game.P1.PlayerValue);
-                 DeckTrack = Game.P1.drawCard(DeckTrack,Game.P1.PlayerValue,
-                    Game.P1.cardHand,Game.P1.toDraw,
-                    gameDeck.getDeck(DeckTrack));
+                 DeckTrack = Game.P1.drawCard(DeckTrack, gameDeck.getDeck(DeckTrack), Game.P1.isDraw);
               }
            }
            
@@ -63,7 +59,7 @@ String [] Ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen"
            Game.D.clearHand();
            
            DeckTrack = gameDeck.ShuffleDeck(DeckTrack, Shuffle, Ranks);
-           
+           System.out.println("============================================================");
         } while(Game.P1.Money > 0);
         
         System.out.println("You ran out of Money...");

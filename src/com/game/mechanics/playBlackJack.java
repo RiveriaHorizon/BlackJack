@@ -13,7 +13,7 @@ public class playBlackJack {
    void RoundStart() {
       System.out.println("Round " + Round++ + ": " + "You have $" + P1.Money);
       System.out.println("How much would you like to bet?");
-      System.out.print(">");
+      System.out.print(">>>");
       this.Bet = sc.nextInt();
    }
    
@@ -21,7 +21,7 @@ public class playBlackJack {
       if(Bet > Money) {
          System.out.println("Oops, you seem to be a little short!");
          System.out.println("Please try again.");
-         System.out.print(">");
+         System.out.print(">>>");
          this.Bet = sc.nextInt();
       }
    }
@@ -60,14 +60,18 @@ public class playBlackJack {
    }
    
    void PlayerMove(int PlayerValue) {
-      if(PlayerValue > 16 && PlayerValue < 21) {
+      
+      if(PlayerValue > 15 && PlayerValue < 21) {
          System.out.println("Would you like to draw from deck?");
          System.out.println("Type 'Yes' to draw, 'No' to pass.");
-         System.out.print(">");
-         this.P1.toDraw = sc.next();
+         System.out.print(">>>");
+         P1.toDraw = sc.next();
       } else {
-         this.P1.toDraw = "Yes";
+         System.out.println("Since you have under 16 pts, you are forced to draw!");
+         P1.toDraw = "Yes";
       }
+      System.out.println("P1.toDraw : " + P1.toDraw);
+      P1.isDraw = P1.Draw(P1.toDraw);
    }
    
 }

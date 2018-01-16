@@ -26,9 +26,9 @@ public class Dealer extends Cards {
        this.DealerValue = 0;
     }
     
-    public int drawCard(int DeckTrack, int DealerValue, String cardHand, String cardReveal, String card) {
-       this.cardHand = cardHand + " " + card;
-       this.cardReveal = cardReveal + " X";
+    public int drawCard(int DeckTrack, String card) {
+       this.cardHand = this.cardHand + " " + card;
+       this.cardReveal = this.cardReveal + " X";
        this.DealerValue += getPoints(card);
        if(card == "Ace") {
           this.Aces++;
